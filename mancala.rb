@@ -31,10 +31,6 @@ class Mancala
       @houses[house] += 1
     end
 
-    # move again starting from the new house, unless the house was empty before you dropped a seed in,
-    # or if the house was one of the pits at either end.
-    make_move(player, house) unless @houses[house] <= 1 or house == 6 or house == 13
-
     # Swap the turns if the player didn't finish in the keep
     # I think the finishing in the keep not changing the turn thing might be broken
     @turn = (player + 1) % 2 unless house == 6 or house == 13
