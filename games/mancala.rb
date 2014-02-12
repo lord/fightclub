@@ -85,7 +85,18 @@ class FightClubApp
   get '/mancala/move' do
     # shows player ids, and then as they connect it shows the game board
     # params :player_id, :move
-    $games[params[:game_id]].move(params[:player_id], params[:game_id], params[:move])
+    return 400 if params[:player_id].nil? || params[:house].nil?
+    player = $players[params[:player_id]]
+    game = $games[player[0]]
+    game_turn = game.turn
+
+    if player[1] != game_turn
+      return 409
+    end
+
+    game.move(player[1].to_i, params[:house].to_i)
+    return 'Now time for your opponent!'
+
   end
 
   get '/mancala/status' do
