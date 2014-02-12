@@ -26,7 +26,7 @@ class Mancala
       house += 1
       house = 7 if house == 6 && player == 1
       house = 0 if house == 13 && player == 0
-      house = 0 if house == 14 && player == 0
+      house = 0 if house == 14
       seeds -= 1
       @houses[house] += 1
     end
