@@ -82,9 +82,13 @@ class FightClubApp
     }.to_json
   end
 
+  get '/mancala/human' do
+    erb :human
+  end
+
   get '/mancala/move' do
     # shows player ids, and then as they connect it shows the game board
-    # params :player_id, :move
+    # params :player_id, :house
     return 400 if params[:player_id].nil? || params[:house].nil?
     player = $players[params[:player_id]]
     game = $games[player[0]]
@@ -95,8 +99,7 @@ class FightClubApp
     end
 
     game.move(player[1].to_i, params[:house].to_i)
-    return 'Now time for your opponent!'
-
+    return game.houses.join ' '
   end
 
   get '/mancala/status' do

@@ -1,0 +1,26 @@
+<html>
+  <head>
+    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>  
+    <script src="/mancala_human.js"></script>
+  </head>
+  <body>
+  <div id='display'> foo </div>
+    <div id='id_prompt'>
+      <form>
+        Please input your player ID:
+        <input type=text id='playerID'>
+        <button id='button_id'>Play Now!</button>
+      </form>
+    </div>
+    <div id='wait_message' style='display:none;'>
+      Waiting for opponent's move...
+    </div>
+    <div id='move_prompt' style='display:none;'>
+      <form>
+        Please input your next move:
+        <input type=text id='move'>
+        <button id='button_move'>Victory is mine!</button>
+      </form>
+    </div>
+  </body>
+</html>
