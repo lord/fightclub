@@ -49,18 +49,19 @@ class FightClubApp
   get '/mancala/move' do
     # shows player ids, and then as they connect it shows the game board
     # params :player_id, :move
-    return 400 if params[:player_id].nil? || params[:house].nil?
+    return [400, "You need to specify a player and a house to move from"] if params[:player_id].nil? || params[:house].nil?
+
     player = $players[params[:player_id]]
+    return [404, "Can't find that player"] if player.nil?
+
     game = $games[player[0]]
-    game_turn = game.turn
+    return [404, "Can't find that game"] if game.nil?
 
-    if player[1] != game_turn
-      return 409
+    if game.move(player[1].to_i, params[:house].to_i)
+      return [200, game.houses.join(' ')]
+    else
+      return [403, "Either it's not your turn, or you can't start at that house"]
     end
-
-    game.move(player[1].to_i, params[:house].to_i)
-    return 'Now time for your opponent!'
-
   end
 
   get '/mancala/status' do

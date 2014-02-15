@@ -19,6 +19,21 @@ class Mancala
   end
 
   def move(player, house)
+
+    # make sure house is valid, and player is either 0 or 1
+    if player == 0 and !(0..5).include? house
+      return false
+    elsif player == 1 and !(7..12).include? house
+      return false
+    elsif ! [0,1].include? player
+      return false
+    end
+
+    # make sure it's the player's turn to move
+    if player != @turn
+      return false
+    end
+
     seeds = @houses[house]
     @houses[house] = 0
 
