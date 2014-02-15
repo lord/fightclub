@@ -3,12 +3,6 @@ require 'redis'
 require 'json'
 require 'oauth2'
 
-$games = {}
-$players = {
-  # "thuneothuneo" => ["ntuheontuheo", 0],
-  # "untetohathut" => ["ntuheontuheo", 1]
-}
-
 class FightClubApp < Sinatra::Base
 end
 
