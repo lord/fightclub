@@ -57,13 +57,22 @@ class FightClubApp
     game = $games[player[0]]
     return [404, "Can't find that game"] if game.nil?
 
-    if game.move(player[1].to_i, params[:house].to_i)
-      return [200, game.houses.join(' ')]
+    house = params[:house].to_i
+    house += 7 if player[1].to_i == 1
+
+    if game.move(player[1].to_i, house)
+      houses = game.houses
+      houses = houses.rotate(7) if player[1].to_i == 1
+      return [200, houses.join(' ')]
     else
-      return [403, "Either it's not your turn, or you can't start at that house"]
+      return [403, "Either it's not your turn, the game is over, or you can't start at that house"]
     end
   end
 
+  # used by players
+  # returns the board if it's your turn
+  # returns just the string "waiting" if you should wait a few seconds before requesting again
+  # returns "win", "lose", or "tie" if the game is over
   get '/mancala/status' do
     # optional params on first status check :player_name, :player_color
     # params :player_id
@@ -74,12 +83,23 @@ class FightClubApp
     game = $games[player[0]]
     player_side = player[1]
 
+    if game.finished?
+      if game.score(0) == game.score(1)
+        return "tie"
+      end
+
+      if (player_side == 1) == (game.score(1) >= game.score(0))
+        return "win"
+      else
+        return "lose"
+      end
+    end
+
     return "waiting" if game.turn != player_side
 
-    game.houses.join ' '
-    # used by players
-    # returns the board if it's your turn
-    # returns just the string "waiting" if you should wait a few seconds before requesting again
-    # returns "victory" or "defeat" if the game is over
+    houses = game.houses
+    houses = houses.rotate(7) if player[1].to_i == 1
+
+    houses.join ' '
   end
 end

@@ -14,8 +14,26 @@ class Mancala
     @turn = 0
   end
 
-  def scores
-    [@houses[6], @houses[13]]
+  def score(player)
+    if player == 0
+      @houses[6]
+    elsif player == 1
+      @houses[13]
+    else
+      nil
+    end
+  end
+
+  def finished?
+    finished = true
+
+    ((0..5).to_a + (7..12).to_a).each do |house_num|
+      if @houses[house_num] != 0
+        finished = false
+      end
+    end
+
+    finished
   end
 
   def move(player, house)
