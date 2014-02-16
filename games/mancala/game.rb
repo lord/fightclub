@@ -24,16 +24,20 @@ class Mancala
     end
   end
 
-  def finished?
-    finished = true
+  def side_empty?(player)
+    offset = player == 1 ? 7 : 0
 
-    ((0..5).to_a + (7..12).to_a).each do |house_num|
+    (offset..offset + 5).each do |house_num|
       if @houses[house_num] != 0
-        finished = false
+        return false
       end
     end
 
-    finished
+    true
+  end
+
+  def finished?
+    side_empty?(1) || side_empty?(0)
   end
 
   def move(player, house)
@@ -52,6 +56,11 @@ class Mancala
       return false
     end
 
+    # make sure that the player hasn't chosen an empty house
+    if @houses[house] == 0
+      return false
+    end
+
     seeds = @houses[house]
     @houses[house] = 0
 
@@ -67,6 +76,20 @@ class Mancala
     # Swap the turns if the player didn't finish in the keep
     # I think the finishing in the keep not changing the turn thing might be broken
     @turn = (player + 1) % 2 unless house == 6 or house == 13
+
+    # If the game is over, put remaining pieces in that player's Mancala
+    if finished?
+      (0..5).each do |house_num|
+        @houses[6] += @houses[house_num]
+        @houses[house_num] = 0
+      end
+
+      (7..12).each do |house_num|
+        @houses[13] += @houses[house_num]
+        @houses[house_num] = 0
+      end
+    end
+
     true
   end
 end
