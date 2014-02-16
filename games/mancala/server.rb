@@ -24,6 +24,10 @@ class FightClubApp
     $players.to_json
   end
 
+  get '/mancala/human' do
+    erb :human
+  end
+
   get '/mancala/games/:game_id' do
     # shows a game
     if $games[params[:game_id]].nil?

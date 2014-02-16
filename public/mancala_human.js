@@ -17,19 +17,29 @@ $(function() {
       success: function(state) {
         $('#display').text(state);
         $('#move_prompt').hide();
-        $('#wait_message').show();
+        wait_for_turn();
+      },
+      error: function(ignore, error_msg) {
+        $('#display').append('<br>No!  You FOOL!!!<br>');
       }
     });
     return false;
   });
 
   function wait_for_turn() {
+    $('#wait_message').show();
     $.ajax({
       url:'/mancala/status',
       data: { player_id: $('#playerID').val()},
       success: function(state) {
-        $('#display').text(state);
-        $('#move_prompt').show();
+        if (state === 'waiting') {
+          setTimeout(wait_for_turn, 200);
+        }
+        else {
+          $('#wait_message').hide();
+          $('#display').text(state);
+          $('#move_prompt').show();
+        }
       }
     });
   }
