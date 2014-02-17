@@ -1,9 +1,33 @@
 <html>
   <head>
+    <link rel="stylesheet" href="/mancala_human.css">
     <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>  
     <script src="/mancala_human.js"></script>
+    <script>document.write('<script src="http://' + (location.host || 'localhost').split(':')[0] + ':35729/livereload.js?snipver=1"></' + 'script>')</script>
   </head>
   <body>
+  <div class="container">
+    <div class="score cell" data-house-number="6">32</div>
+    <div class="board">
+      <div class="row">
+        <div class="house cell" data-house-number="0">5</div>
+        <div class="house cell" data-house-number="1">6</div>
+        <div class="house cell" data-house-number="2">7</div>
+        <div class="house cell" data-house-number="3">0</div>
+        <div class="house cell" data-house-number="4">10</div>
+        <div class="house cell" data-house-number="5">4</div>
+      </div>
+      <div class="row">
+        <div class="house cell" data-house-number="7">3</div>
+        <div class="house cell" data-house-number="8">9</div>
+        <div class="house cell" data-house-number="9">12</div>
+        <div class="house cell" data-house-number="10">5</div>
+        <div class="house cell" data-house-number="11">8</div>
+        <div class="house cell" data-house-number="12">48</div>
+      </div>
+    </div>
+    <div class="score cell" data-house-number="13">2</div>
+  </div>
   <div id='display'> foo </div>
     <div id='id_prompt'>
       <form>

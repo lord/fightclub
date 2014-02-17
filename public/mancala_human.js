@@ -1,4 +1,4 @@
-$(function() {
+// $(function() {
   // window.setTimeout(function() {
   //   $('body').text("hello world");
   // }, 5000);
@@ -15,7 +15,7 @@ $(function() {
         house: $('#move').val()
       },
       success: function(state) {
-        $('#display').text(state);
+        set_scores(state);
         $('#move_prompt').hide();
         wait_for_turn();
       },
@@ -25,6 +25,14 @@ $(function() {
     });
     return false;
   });
+
+  function set_scores(scores_string) {
+    var scores = scores_string.split(' ');
+    $('.cell').each(function() {
+      console.log(scores[parseInt($(this).data('house-number'))]);
+      $(this).text(scores[parseInt($(this).data('house-number'))]);
+    });
+  }
 
   function wait_for_turn() {
     $('#wait_message').show();
@@ -37,10 +45,10 @@ $(function() {
         }
         else {
           $('#wait_message').hide();
-          $('#display').text(state);
+          set_scores(state);
           $('#move_prompt').show();
         }
       }
     });
   }
-});
+// });

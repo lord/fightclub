@@ -24,6 +24,10 @@ class FightClubApp
     $players.to_json
   end
 
+  get '/mancala_human.css' do
+    scss :mancala_human
+  end
+
   get '/mancala/human' do
     erb :human
   end

@@ -1,0 +1,50 @@
+$cell-color: #b00;
+$cell-text-color: #000;
+$highlight: #f80;
+
+body {
+  background-color: #000;
+  color: #ff6;
+}
+
+.container {
+  text-align: center;
+}
+
+.score, .house {
+  padding: 5px;
+  margin: 8px;
+  border-radius: 10px;
+  color: $cell-text-color;
+  background-color: $cell-color;
+  width: 60px;
+}
+
+.score, .board {
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.score {
+  height: 146px;
+}
+
+.row {
+
+  &:after {
+    content: '';
+    display: block;
+    clear: both;
+  }
+}
+
+.house {
+  float: left;
+  height: 60px;
+}
+
+// div.parent:after {
+//   content: '';
+//   display: block;
+//   clear: both;
+// }
