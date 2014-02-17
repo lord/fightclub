@@ -54,6 +54,7 @@ GEM
       rack (>= 1.0)
       rack-test (>= 0.5)
       ripl (>= 0.3.5)
+    sass (3.2.14)
     sinatra (1.4.4)
       rack (~> 1.4)
       rack-protection (~> 1.4)
@@ -86,6 +87,7 @@ DEPENDENCIES
   oauth2 (~> 0.9.3)
   pg
   redis (~> 3.0.7)
+  sass
   sinatra (~> 1.4.4)
   sinatra-activerecord
   sinatra-flash
