@@ -33,20 +33,19 @@ class FightClubApp
     if $games[params[:game_id]].nil?
       return 404
     else
-      return "okay! game ajax code here"
+      erb :mancala
     end
   end
 
   get '/mancala/games/:game_id/json' do
     # params :game_id
     # returns the board status in json, used for /mancala/:game_id ajax
+    game = $games[params[:game_id]]
+    return [404, "Can't find that game"] if game.nil?
     {
-      status: [
-        false,
-        false
-      ],
-      board: $games[params[:game_id]].houses,
-      turn: $games[params[:game_id]].turn
+      status: game.status,
+      board: game.houses,
+      turn: game.turn
     }.to_json
   end
 
@@ -86,6 +85,10 @@ class FightClubApp
 
     game = $games[player[0]]
     player_side = player[1]
+
+    game.status[player_side] = true
+
+    return "waiting" unless game.ready?
 
     if game.finished?
       if game.score(0) == game.score(1)

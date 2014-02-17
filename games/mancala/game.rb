@@ -14,6 +14,10 @@ class Mancala
     @turn = 0
   end
 
+  def ready?
+    status[0] && status[1]
+  end
+
   def score(player)
     if player == 0
       @houses[6]
