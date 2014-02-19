@@ -9,15 +9,18 @@ class FightClubApp
     end while $games[game_name] != nil
     $games[game_name] = Mancala.new
 
+    player_names = []
+
     2.times do |player_side|
       begin
         name = (0...8).map { (65 + rand(26)).chr }.join
       end while $players[name] != nil
 
       $players[name] = [game_name, player_side]
+      player_names[player_side] = name
     end
 
-    redirect to('/mancala/games/' + game_name)
+    erb :mancala, :locals => {:game => game_name, :player0 => player_names[0], :player1 => player_names[1]}
   end
 
   get '/players' do
@@ -26,15 +29,6 @@ class FightClubApp
 
   get '/mancala/human' do
     erb :human
-  end
-
-  get '/mancala/games/:game_id' do
-    # shows a game
-    if $games[params[:game_id]].nil?
-      return 404
-    else
-      erb :mancala
-    end
   end
 
   get '/mancala/games/:game_id/json' do

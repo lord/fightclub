@@ -1,22 +1,38 @@
 $(function() {
+  var game_id = $('body').data('game-id');
+  var game_started = false;
+  var controls;
+  $('.player').click(function() {
+    $(this).focus();
+  });
   var updateState = function() {
     $.ajax({
-      url: document.location.pathname + '/json',
+      url: '/mancala/games/' + game_id + '/json',
       success: function(state) {
-        setSeeds(0, state['board'][0]);
-        setSeeds(1, state['board'][1]);
-        setSeeds(2, state['board'][2]);
-        setSeeds(3, state['board'][3]);
-        setSeeds(4, state['board'][4]);
-        setSeeds(5, state['board'][5]);
-        setScore(player0ScoreCanvas.getContext('2d'), player0ScoreMesh, state['board'][6], 'rgba(0,0,255,0.95)', 'left');
-        setSeeds(7, state['board'][7]);
-        setSeeds(8, state['board'][8]);
-        setSeeds(9, state['board'][9]);
-        setSeeds(10, state['board'][10]);
-        setSeeds(11, state['board'][11]);
-        setSeeds(12, state['board'][12]);
-        setScore(player1ScoreCanvas.getContext('2d'), player1ScoreMesh, state['board'][13], 'rgba(255,0,0,0.95)', 'right');
+        if (game_started) {
+          setSeeds(0, state['board'][0]);
+          setSeeds(1, state['board'][1]);
+          setSeeds(2, state['board'][2]);
+          setSeeds(3, state['board'][3]);
+          setSeeds(4, state['board'][4]);
+          setSeeds(5, state['board'][5]);
+          setScore(player0ScoreCanvas.getContext('2d'), player0ScoreMesh, state['board'][6], 'rgba(0,0,255,0.95)', 'left');
+          setSeeds(7, state['board'][7]);
+          setSeeds(8, state['board'][8]);
+          setSeeds(9, state['board'][9]);
+          setSeeds(10, state['board'][10]);
+          setSeeds(11, state['board'][11]);
+          setSeeds(12, state['board'][12]);
+          setScore(player1ScoreCanvas.getContext('2d'), player1ScoreMesh, state['board'][13], 'rgba(255,0,0,0.95)', 'right');
+        } else if (state['status'][0] == true && state['status'][1] == true) {
+          game_started = true;
+          controls = new THREE.OrbitControls( camera );
+          $('.player').hide();
+        } else if (state['status'][0] == true) {
+          $('#player0').text('Player 0 Ready!');
+        } else if (state['status'][1] == true) {
+          $('#player1').text('Player 1 Ready!');
+        }
         setTimeout(updateState, 300);
       }
     });
@@ -28,7 +44,10 @@ $(function() {
   ///////////////////////////////
   var scene = new THREE.Scene();
   var camera = new THREE.PerspectiveCamera( 45, window.innerWidth / window.innerHeight, 10, 100000);
-  camera.position.z = 6000;
+  camera.position.z = 5000;
+  camera.position.y = 3000;
+  camera.rotation.x = -0.54042;
+          // controls = new THREE.OrbitControls( camera );
 
   var renderer = new THREE.WebGLRenderer();
   renderer.setSize( window.innerWidth, window.innerHeight );
@@ -37,7 +56,6 @@ $(function() {
 
   document.body.appendChild( renderer.domElement );
 
-  var controls = new THREE.OrbitControls( camera );
 
   ///////////////////////////////
   // CUBE CODE
@@ -128,7 +146,7 @@ $(function() {
   player0ScoreMesh.rotation.x = -Math.PI / 2;
   scene.add( player0ScoreMesh );
 
-  setScore(context, player0ScoreMesh, '0', 'rgba(255,0,0,0.95)', 'left');
+  setScore(context, player0ScoreMesh, '0', 'rgba(0,0,255,0.95)', 'left');
 
   var player1ScoreCanvas = newCanvas(1000,1000);
   var context1 = player1ScoreCanvas.getContext('2d');
@@ -141,7 +159,7 @@ $(function() {
   player1ScoreMesh.rotation.x = -Math.PI / 2;
   scene.add( player1ScoreMesh );
 
-  setScore(context1, player1ScoreMesh, '0', 'rgba(0,0,255,0.95)', 'right');
+  setScore(context1, player1ScoreMesh, '0', 'rgba(255,0,0,0.95)', 'right');
 
   // var geometry = new THREE.CubeGeometry(1,1,1);
   // var material = new THREE.MeshLambertMaterial( { color: 0xff0000 } )

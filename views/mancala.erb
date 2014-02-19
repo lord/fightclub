@@ -2,13 +2,35 @@
   <head>
     <style>
       canvas { width: 100%; height: 100% }
-      body { margin: 0;}
+      body {
+        margin: 0;
+        font-family: "Source Code Pro", "Courier New", Courier, monospace;
+      }
+      #player0 {
+        position: absolute; top: 0; right: 0;
+        border-bottom: #3333ff 4px solid;
+      }
+      #player1 {
+        position: absolute; bottom: 0; left: 0;
+        border-top: #ff3333 4px solid;
+      }
+      .player {
+        background-color: #f8f8f8;
+        padding: 2em;
+        z-index: 100;
+      }
     </style>
     <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
     <script src="https://rawgithub.com/mrdoob/three.js/master/build/three.js"></script>
     <script src="/orbit_controls.js"></script>
     <script src="/mancala.js"></script>
   </head>
-  <body>
+  <body data-game-id="<%= game %>">
+    <div id="player0" class="player">
+      id: <%= player0 %>
+    </div>
+    <div id="player1" class="player">
+      id: <%= player1 %>
+    </div>
   </body>
 </html>
