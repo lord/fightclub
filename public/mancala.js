@@ -5,6 +5,9 @@ $(function() {
   $('.player').click(function() {
     $(this).focus();
   });
+  $('.random-player').click(function() {
+    startRandom($(this).data('player-id'));
+  });
   var updateState = function() {
     $.ajax({
       url: '/mancala/games/' + game_id + '/json',
@@ -38,6 +41,34 @@ $(function() {
     });
   }
   updateState();
+
+
+  var startRandom = function(playerID) {
+    $.ajax({
+      url:'/mancala/status',
+      data: { player_id: playerID },
+      success: function(state) {
+        if (state === 'waiting') {
+          setTimeout(startRandom, 400, playerID);
+          return true;
+        }
+        else if (state === 'win' || state === 'lose') {
+          console.log('random player stopped');
+          return true;
+        }
+        houses = state.split(' ');
+        var move = 0;
+        while (houses[move] == '0') {
+          move = Math.floor(Math.random()*6)
+        }
+        $.ajax({
+          url:'/mancala/move',
+          data: { player_id: playerID, house: move }
+        });
+        setTimeout(startRandom, 600, playerID);
+      }
+    });
+  };
 
   ///////////////////////////////
   // BASIC 3D SETUP
@@ -175,7 +206,6 @@ $(function() {
   var seeds = Array();
 
   function setSeeds(houseID, seedCount) {
-    console.log(seeds);
     var location = cube_location_map[houseID];
     var x = location[0];
     var y = location[1];
