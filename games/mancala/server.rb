@@ -42,11 +42,11 @@ class FightClubApp
     # returns the board status in json, used for /mancala/:game_id ajax
     game = $games[params[:game_id]]
     return [404, "Can't find that game"] if game.nil?
-    {
+    [200, {"Content-Type" => "text/json"},{
       status: game.status,
       board: game.houses,
       turn: game.turn
-    }.to_json
+    }.to_json]
   end
 
   get '/mancala/move' do
