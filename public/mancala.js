@@ -271,9 +271,6 @@ $(function() {
   ///////////////////////////////
   function render() {
     requestAnimationFrame(render);
-    light_angle += 0.0002;
-    setLightPosition(light, light_angle, light_distance);
-
     renderer.render( scene, camera );
   }
 
