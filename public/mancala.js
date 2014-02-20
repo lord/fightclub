@@ -213,12 +213,11 @@ $(function() {
     houseID = parseInt(houseID);
     seedCount = parseInt(seedCount);
     var seedMaterial = new THREE.MeshPhongMaterial( {
-      color: 0xffffff,
-      emissive: 0x888888,
-      shininess: 10,
-      specular: 0x000000
+      color: 0xcccccc,
+      emissive: 0x000000,
+      shininess: 100,
+      specular: 0xcccccc
     } );
-
     if (seeds[houseID] !== undefined) {
       for(seed in seeds[houseID]) {
         scene.remove(seeds[houseID][seed]);
@@ -254,7 +253,7 @@ $(function() {
   var light_distance = 1700;
   setLightPosition(light, light_angle, light_distance);
   // light.position.set( 1600, 1100, 600 );
-  light.shadowDarkness = 0.3;
+  light.shadowDarkness = 0.2;
   light.castShadow = true;
   // light.shadowCameraVisible = true;
   light.shadowCameraLeft = light.shadowCameraBottom = -3000;
