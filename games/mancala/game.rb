@@ -77,6 +77,17 @@ class Mancala
       @houses[house] += 1
     end
 
+    # Capture pieces if last one lands in a empty house on the player's side
+    if ((0..5).include? house) && (player == 0) && (@houses[house] == 1)
+      @houses[6] += @houses[12-house] + 1
+      @houses[house] = 0
+      @houses[12-house] = 0
+    elsif ((7..12).include? house) && (player == 1) && (@houses[house] == 1)
+      @houses[13] += @houses[12-house] + 1
+      @houses[house] = 0
+      @houses[12-house] = 0
+    end
+
     # Swap the turns if the player didn't finish in the keep
     # I think the finishing in the keep not changing the turn thing might be broken
     @turn = (player + 1) % 2 unless house == 6 or house == 13
